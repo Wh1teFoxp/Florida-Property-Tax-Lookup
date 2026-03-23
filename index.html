@@ -7,35 +7,35 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f0f0ee; min-height: 100vh; padding: 2rem 1rem; color: #1a1a1a; }
-.container { max-width: 780px; margin: 0 auto; }
-.header { background: #1a1a1a; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
-.header svg { width: 22px; height: 22px; flex-shrink: 0; }
-.header h1 { font-size: 17px; font-weight: 600; color: #fff; }
-.header span { font-size: 13px; color: #888; margin-left: auto; white-space: nowrap; }
+.container { max-width: 760px; margin: 0 auto; }
+
+.header { background: #1a1a1a; border-radius: 12px; padding: 1.1rem 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
+.header svg { width: 20px; height: 20px; flex-shrink: 0; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.header h1 { font-size: 16px; font-weight: 600; color: #fff; }
+.header .by { font-size: 12px; color: #666; margin-left: auto; }
+.header .by strong { color: #999; font-weight: 500; }
 
 .card { background: #fff; border-radius: 12px; border: 1px solid #e5e5e3; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
-.card-title { font-size: 12px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
 
-/* Search type toggle */
 .toggle-row { display: flex; gap: 6px; margin-bottom: 1rem; }
-.toggle-btn { flex: 1; padding: 8px; font-size: 13px; font-weight: 500; border: 1px solid #ddd; border-radius: 7px; background: #f9f9f7; color: #666; cursor: pointer; transition: all 0.15s; }
+.toggle-btn { flex: 1; padding: 8px; font-size: 13px; font-weight: 500; border: 1px solid #ddd; border-radius: 7px; background: #f9f9f7; color: #777; cursor: pointer; }
 .toggle-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
 
-/* County selector */
-.county-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem; }
 .field-label { font-size: 12px; color: #888; margin-bottom: 4px; }
-select, input[type=text] { width: 100%; padding: 9px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #1a1a1a; outline: none; }
-select:focus, input[type=text]:focus { border-color: #888; }
+select { width: 100%; padding: 9px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #1a1a1a; outline: none; margin-bottom: 1rem; }
+select:focus { border-color: #888; }
 
-/* Entries */
-.entry-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.tip { font-size: 12px; color: #888; background: #f9f9f7; border-radius: 7px; padding: 8px 12px; margin-bottom: 1rem; line-height: 1.6; }
+.tip b { color: #555; }
+
+.entry-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
 .entry-row { display: grid; grid-template-columns: 1fr auto; gap: 6px; align-items: center; }
-.entry-input { width: 100%; padding: 9px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #1a1a1a; outline: none; }
+.entry-input { width: 100%; padding: 9px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 8px; color: #1a1a1a; outline: none; background: #fff; }
 .entry-input:focus { border-color: #888; }
 .remove-btn { background: none; border: none; color: #ccc; cursor: pointer; font-size: 18px; padding: 4px 8px; border-radius: 6px; line-height: 1; }
-.remove-btn:hover { color: #c0392b; background: #fff0f0; }
+.remove-btn:hover { color: #e00; background: #fff0f0; }
 .add-btn { font-size: 13px; color: #999; background: none; border: 1px dashed #ddd; border-radius: 7px; padding: 7px; cursor: pointer; width: 100%; margin-bottom: 0.75rem; }
-.add-btn:hover { background: #f9f9f7; color: #555; }
+.add-btn:hover { background: #f9f9f7; }
 
 .btn-row { display: flex; gap: 8px; }
 .search-btn { flex: 1; padding: 10px; font-size: 14px; font-weight: 600; background: #1a1a1a; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
@@ -43,482 +43,343 @@ select:focus, input[type=text]:focus { border-color: #888; }
 .clear-btn { padding: 10px 16px; font-size: 14px; color: #888; background: none; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; }
 .clear-btn:hover { background: #f9f9f7; }
 
-/* Results */
 .results { display: flex; flex-direction: column; gap: 8px; margin-top: 1rem; }
 .result-card { background: #fff; border: 1px solid #e5e5e3; border-radius: 10px; padding: 12px 14px; }
-.result-card.fallback { border-left: 3px solid #f59e0b; }
 .result-card.error { border-left: 3px solid #ef4444; background: #fff8f8; }
 .rc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-.rc-query { font-size: 12px; color: #999; margin-bottom: 2px; }
-.rc-county { font-size: 15px; font-weight: 600; }
-.rc-method { font-size: 11px; color: #aaa; margin-top: 1px; }
+.rc-query { font-size: 12px; color: #aaa; margin-bottom: 2px; }
+.rc-county { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+.rc-sub { font-size: 11px; color: #bbb; margin-top: 1px; }
 .badge { font-size: 11px; padding: 2px 8px; border-radius: 5px; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
-.badge-blue { background: #e8f0fe; color: #1a56db; }
-.badge-amber { background: #fef3c7; color: #b45309; }
 .badge-green { background: #d1fae5; color: #065f46; }
+.badge-blue { background: #e8f0fe; color: #1a56db; }
 .rc-links { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
-.rc-link { font-size: 12px; padding: 5px 11px; border-radius: 6px; border: 1px solid #e0e0e0; color: #444; text-decoration: none; background: #f9f9f7; cursor: pointer; white-space: nowrap; }
+.rc-link { font-size: 12px; padding: 5px 11px; border-radius: 6px; border: 1px solid #e0e0e0; color: #555; text-decoration: none; background: #f9f9f7; white-space: nowrap; }
 .rc-link:hover { background: #fff; border-color: #bbb; }
-.rc-link.primary { border-color: #bcd; color: #1a56db; background: #e8f0fe; font-weight: 500; }
+.rc-link.primary { border-color: #6ee7b7; color: #065f46; background: #d1fae5; font-weight: 500; }
 .rc-link.primary:hover { opacity: 0.85; }
-.rc-link.green { border-color: #a7f3d0; color: #065f46; background: #d1fae5; font-weight: 500; }
-.rc-link.green:hover { opacity: 0.85; }
+.rc-link.sec { border-color: #c7d9fc; color: #1a56db; background: #e8f0fe; }
+.rc-link.sec:hover { opacity: 0.85; }
 .err-msg { font-size: 13px; color: #dc2626; margin-top: 4px; }
-
-.spinner { display: inline-block; width: 13px; height: 13px; border: 2px solid #ddd; border-top-color: #666; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 5px; }
+.spinner { display: inline-block; width: 13px; height: 13px; border: 2px solid #ddd; border-top-color: #555; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 5px; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-.note { font-size: 11px; color: #bbb; margin-top: 0.75rem; line-height: 1.6; }
-.footer { text-align: right; margin-top: 0.5rem; font-size: 12px; color: #bbb; }
-.footer strong { color: #999; font-weight: 500; }
-
-/* Tip box */
-.tip { background: #f9f9f7; border: 1px solid #e5e5e3; border-radius: 8px; padding: 10px 14px; margin-bottom: 1rem; font-size: 12px; color: #777; line-height: 1.6; }
-.tip b { color: #444; font-weight: 600; }
+.note { font-size: 11px; color: #bbb; margin-top: 0.5rem; line-height: 1.6; padding: 0 0.25rem; }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <div class="header">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    <h1>Florida Property Tax Lookup</h1>
-    <span>Developed by <strong style="color:#ccc">Carlos Padrino</strong></span>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Tipo de búsqueda</div>
-    <div class="toggle-row">
-      <button class="toggle-btn active" id="btn-address" onclick="setMode('address')">Por dirección</button>
-      <button class="toggle-btn" id="btn-name" onclick="setMode('name')">Por nombre del dueño</button>
-    </div>
-
-    <div class="county-row">
-      <div>
-        <div class="field-label">Condado</div>
-        <select id="county-select">
-          <option value="auto">🔍 Auto-detectar</option>
-          <optgroup label="── Más comunes ──">
-            <option value="miami-dade">Miami-Dade</option>
-            <option value="broward">Broward</option>
-            <option value="palm-beach">Palm Beach</option>
-            <option value="hillsborough">Hillsborough</option>
-            <option value="orange">Orange</option>
-            <option value="pinellas">Pinellas</option>
-            <option value="collier">Collier</option>
-            <option value="lee">Lee</option>
-            <option value="seminole">Seminole</option>
-            <option value="sarasota">Sarasota</option>
-            <option value="duval">Duval</option>
-            <option value="brevard">Brevard</option>
-            <option value="volusia">Volusia</option>
-            <option value="manatee">Manatee</option>
-            <option value="polk">Polk</option>
-            <option value="leon">Leon</option>
-            <option value="monroe">Monroe</option>
-            <option value="martin">Martin</option>
-            <option value="st-lucie">St. Lucie</option>
-            <option value="indian-river">Indian River</option>
-          </optgroup>
-          <optgroup label="── Otros ──">
-            <option value="alachua">Alachua</option>
-            <option value="bay">Bay</option>
-            <option value="charlotte">Charlotte</option>
-            <option value="citrus">Citrus</option>
-            <option value="clay">Clay</option>
-            <option value="columbia">Columbia</option>
-            <option value="escambia">Escambia</option>
-            <option value="flagler">Flagler</option>
-            <option value="hernando">Hernando</option>
-            <option value="highlands">Highlands</option>
-            <option value="lake">Lake</option>
-            <option value="marion">Marion</option>
-            <option value="nassau">Nassau</option>
-            <option value="okaloosa">Okaloosa</option>
-            <option value="osceola">Osceola</option>
-            <option value="pasco">Pasco</option>
-            <option value="putnam">Putnam</option>
-            <option value="santa-rosa">Santa Rosa</option>
-            <option value="st-johns">St. Johns</option>
-            <option value="sumter">Sumter</option>
-            <option value="walton">Walton</option>
-          </optgroup>
-        </select>
-      </div>
-      <div id="name-format-help" style="display:none">
-        <div class="field-label">Formato nombre</div>
-        <select id="name-format">
-          <option value="last-first">Apellido, Nombre (Smith, John)</option>
-          <option value="first-last">Nombre Apellido (John Smith)</option>
-          <option value="company">Empresa / LLC</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="tip" id="tip-address">
-      Puedes pegar sin ciudad ni ZIP — si el condado está seleccionado manualmente funciona igual. Palabras como "Furnitures" o "Appliances" se filtran solas.
-    </div>
-    <div class="tip" id="tip-name" style="display:none">
-      Para búsqueda por nombre: ingresa <b>Apellido, Nombre</b> (ej: <b>Garcia, Pedro</b>) o nombre de empresa. Disponible en todos los condados principales.
-    </div>
-
-    <div class="entry-list" id="entry-list"></div>
-    <button class="add-btn" onclick="addEntry()">+ Agregar otro</button>
-
-    <div class="btn-row">
-      <button class="search-btn" onclick="runSearch()">Buscar →</button>
-      <button class="clear-btn" onclick="clearAll()">Limpiar</button>
-    </div>
-  </div>
-
-  <div class="results" id="results"></div>
-  <p class="note" id="note" style="display:none">Los links abren en nueva pestaña directo a la búsqueda. Condados con búsqueda directa: Miami-Dade, Broward, Palm Beach, Hillsborough, Orange, Pinellas, Collier, Lee, Seminole, Sarasota, Duval, Brevard, Volusia, Manatee, Polk, Leon, Monroe. Para los demás se abre el portal principal.</p>
-
+<div class="header">
+  <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  <h1>Florida Property Tax Lookup</h1>
+  <span class="by">Developed by <strong>Carlos Padrino</strong></span>
 </div>
 
+<div class="card">
+  <div class="toggle-row">
+    <button class="toggle-btn active" id="btn-addr" onclick="setMode('address')">Por dirección</button>
+    <button class="toggle-btn" id="btn-name" onclick="setMode('name')">Por nombre / empresa</button>
+  </div>
+
+  <div class="field-label">Condado</div>
+  <select id="county-sel">
+    <option value="">— Selecciona el condado —</option>
+    <optgroup label="Con búsqueda directa (Tax Collector)">
+      <option value="miamidade">Miami-Dade</option>
+      <option value="broward">Broward</option>
+      <option value="palmbeach">Palm Beach</option>
+      <option value="hillsborough">Hillsborough</option>
+      <option value="orange">Orange</option>
+      <option value="pinellas">Pinellas</option>
+      <option value="collier">Collier</option>
+      <option value="lee">Lee</option>
+      <option value="polk">Polk</option>
+      <option value="volusia">Volusia</option>
+      <option value="seminole">Seminole</option>
+      <option value="sarasota">Sarasota</option>
+      <option value="manatee">Manatee</option>
+      <option value="brevard">Brevard</option>
+      <option value="duval">Duval</option>
+      <option value="leon">Leon</option>
+      <option value="marion">Marion</option>
+      <option value="stjohns">St. Johns</option>
+      <option value="pasco">Pasco</option>
+      <option value="lake">Lake</option>
+      <option value="osceola">Osceola</option>
+      <option value="charlotte">Charlotte</option>
+      <option value="alachua">Alachua</option>
+      <option value="hernando">Hernando</option>
+      <option value="indianriver">Indian River</option>
+      <option value="martin">Martin</option>
+      <option value="monroe">Monroe</option>
+      <option value="clay">Clay</option>
+      <option value="stlucie">St. Lucie</option>
+      <option value="escambia">Escambia</option>
+      <option value="okaloosa">Okaloosa</option>
+      <option value="santarosa">Santa Rosa</option>
+      <option value="flagler">Flagler</option>
+      <option value="citrus">Citrus</option>
+      <option value="sumter">Sumter</option>
+    </optgroup>
+    <optgroup label="Portal principal solamente">
+      <option value="baker">Baker</option>
+      <option value="bay">Bay</option>
+      <option value="bradford">Bradford</option>
+      <option value="calhoun">Calhoun</option>
+      <option value="columbia">Columbia</option>
+      <option value="desoto">DeSoto</option>
+      <option value="dixie">Dixie</option>
+      <option value="franklin">Franklin</option>
+      <option value="gadsden">Gadsden</option>
+      <option value="gilchrist">Gilchrist</option>
+      <option value="glades">Glades</option>
+      <option value="gulf">Gulf</option>
+      <option value="hamilton">Hamilton</option>
+      <option value="hardee">Hardee</option>
+      <option value="hendry">Hendry</option>
+      <option value="highlands">Highlands</option>
+      <option value="holmes">Holmes</option>
+      <option value="jackson">Jackson</option>
+      <option value="jefferson">Jefferson</option>
+      <option value="lafayette">Lafayette</option>
+      <option value="levy">Levy</option>
+      <option value="liberty">Liberty</option>
+      <option value="madison">Madison</option>
+      <option value="nassau">Nassau</option>
+      <option value="okeechobee">Okeechobee</option>
+      <option value="putnam">Putnam</option>
+      <option value="suwannee">Suwannee</option>
+      <option value="taylor">Taylor</option>
+      <option value="union">Union</option>
+      <option value="wakulla">Wakulla</option>
+      <option value="walton">Walton</option>
+      <option value="washington">Washington</option>
+    </optgroup>
+  </select>
+
+  <div class="tip" id="tip-addr">Pega la dirección tal como la tienes — sin ciudad ni ZIP está bien si sabes el condado. Palabras extra como "Furnitures" o "Appliances" se filtran solas.</div>
+  <div class="tip" id="tip-name" style="display:none">Escribe el nombre del dueño (<b>Garcia, Pedro</b>) o nombre de empresa (<b>Korn Investments LLC</b>). La búsqueda va directo al Tax Collector del condado.</div>
+
+  <div class="entry-list" id="entry-list"></div>
+  <button class="add-btn" onclick="addEntry()">+ Agregar otro</button>
+  <div class="btn-row">
+    <button class="search-btn" onclick="runSearch()">Buscar →</button>
+    <button class="clear-btn" onclick="clearAll()">Limpiar</button>
+  </div>
+</div>
+
+<div class="results" id="results"></div>
+<p class="note" id="note" style="display:none">Los links abren en nueva pestaña. "Búsqueda directa" = abre con los resultados ya filtrados en el portal del Tax Collector. "Portal" = abre la página principal del condado para buscar manualmente.</p>
+
+</div>
 <script>
-let searchMode = 'address';
+let mode = 'address';
 
-const COUNTY_DATA = {
-  'miami-dade': {
-    name: 'Miami-Dade County',
-    appraiser: 'https://www.miamidade.gov/pa/',
-    tax: 'https://www.miamidade.gov/taxcollector/',
-    searchAddr: q => `https://www.miamidade.gov/Apps/PA/propertysearch/#/prop/address/${encodeURIComponent(q)}`,
-    searchName: q => `https://www.miamidade.gov/Apps/PA/propertysearch/#/prop/name/${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'broward': {
-    name: 'Broward County',
-    appraiser: 'https://bcpa.net/',
-    tax: 'https://www.browardtaxes.com/',
-    searchAddr: q => `https://bcpa.net/RecAddr.asp?strnm=${encodeURIComponent(extractStreetName(q))}&strnumber=${encodeURIComponent(extractStreetNumber(q))}`,
-    searchName: q => `https://bcpa.net/recname.asp?ownername=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'palm-beach': {
-    name: 'Palm Beach County',
-    appraiser: 'https://www.pbcgov.com/papa/',
-    tax: 'https://www.pbctax.com/',
-    searchAddr: q => `https://www.pbcgov.com/papa/Asps/PropertySearch/PropertySearch.aspx?parcel=&addr=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.pbcgov.com/papa/Asps/PropertySearch/PropertySearch.aspx?owner=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'hillsborough': {
-    name: 'Hillsborough County',
-    appraiser: 'https://www.hcpafl.org/',
-    tax: 'https://www.hillstax.org/',
-    searchAddr: q => `https://gis.hcpafl.org/propertysearch/#/prop/address/${encodeURIComponent(q)}`,
-    searchName: q => `https://gis.hcpafl.org/propertysearch/#/prop/name/${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'orange': {
-    name: 'Orange County',
-    appraiser: 'https://www.ocpafl.org/',
-    tax: 'https://www.octaxcol.com/',
-    searchAddr: q => `https://www.ocpafl.org/Searches/parcelSearch.aspx?addr=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.ocpafl.org/Searches/parcelSearch.aspx?ownr=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'pinellas': {
-    name: 'Pinellas County',
-    appraiser: 'https://www.pcpao.gov/',
-    tax: 'https://www.taxcollect.com/',
-    searchAddr: q => `https://www.pcpao.gov/general.php?pkey=&SearchAddress=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.pcpao.gov/general.php?pkey=&SearchName=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'collier': {
-    name: 'Collier County',
-    appraiser: 'https://www.collierappraiser.com/',
-    tax: 'https://www.colliertaxcollector.com/',
-    searchAddr: q => `https://www.collierappraiser.com/main_search/RecordSearch.aspx?name=&address=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.collierappraiser.com/main_search/RecordSearch.aspx?name=${encodeURIComponent(q)}&address=`,
-    directSearch: true
-  },
-  'lee': {
-    name: 'Lee County',
-    appraiser: 'https://www.leepa.org/',
-    tax: 'https://www.leetc.com/',
-    searchAddr: q => `https://www.leepa.org/search/search.aspx?ID=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.leepa.org/search/search.aspx?owner=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'seminole': {
-    name: 'Seminole County',
-    appraiser: 'https://www.scpafl.org/',
-    tax: 'https://www.seminolecountytax.com/',
-    searchAddr: q => `https://www.scpafl.org/PaSearch.aspx?addr=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.scpafl.org/PaSearch.aspx?name=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'sarasota': {
-    name: 'Sarasota County',
-    appraiser: 'https://www.sc-pa.com/',
-    tax: 'https://www.sarasotataxcollector.com/',
-    searchAddr: q => `https://www.sc-pa.com/propertysearch/find/?q=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.sc-pa.com/propertysearch/find/?q=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'duval': {
-    name: 'Duval County',
-    appraiser: 'https://www.coj.net/departments/property-appraiser',
-    tax: 'https://www.coj.net/departments/tax-collector',
-    searchAddr: q => `https://apps2.coj.net/pa_pc/detail.aspx?StreetAddress=${encodeURIComponent(q)}`,
-    searchName: q => `https://apps2.coj.net/pa_pc/detail.aspx?OwnerName=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'brevard': {
-    name: 'Brevard County',
-    appraiser: 'https://www.bcpao.us/',
-    tax: 'https://www.brevardtaxcollector.com/',
-    searchAddr: q => `https://www.bcpao.us/propertyDetails/#?loc=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.bcpao.us/propertyDetails/#?owner=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'volusia': {
-    name: 'Volusia County',
-    appraiser: 'https://www.vcpa.org/',
-    tax: 'https://www.volusia.org/services/financial-and-administrative-services/county-finance/tax-collector/',
-    searchAddr: q => `https://www.vcpa.org/search/?q=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.vcpa.org/search/?q=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'manatee': {
-    name: 'Manatee County',
-    appraiser: 'https://www.manateepao.com/',
-    tax: 'https://www.taxcollector.com/',
-    searchAddr: q => `https://www.manateepao.com/search/?addr=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.manateepao.com/search/?name=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'polk': {
-    name: 'Polk County',
-    appraiser: 'https://www.polkpa.org/',
-    tax: 'https://www.polktaxes.com/',
-    searchAddr: q => `https://www.polkpa.org/CamaDisplay.aspx?OutputMode=Address&AddressSearch=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.polkpa.org/CamaDisplay.aspx?OutputMode=Name&NameSearch=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'leon': {
-    name: 'Leon County',
-    appraiser: 'https://www.leonpa.org/',
-    tax: 'https://www.leontaxcollector.net/',
-    searchAddr: q => `https://www.leonpa.org/Search/?q=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.leonpa.org/Search/?q=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'monroe': {
-    name: 'Monroe County',
-    appraiser: 'https://www.mcpafl.org/',
-    tax: 'https://www.monroetaxcollector.com/',
-    searchAddr: q => `https://www.mcpafl.org/Search/?q=${encodeURIComponent(q)}`,
-    searchName: q => `https://www.mcpafl.org/Search/?q=${encodeURIComponent(q)}`,
-    directSearch: true
-  },
-  'martin': { name: 'Martin County', appraiser: 'https://www.pa.martin.fl.us/', tax: 'https://www.martintax.com/', searchAddr: q => `https://www.pa.martin.fl.us/search/?q=${encodeURIComponent(q)}`, searchName: q => `https://www.pa.martin.fl.us/search/?q=${encodeURIComponent(q)}`, directSearch: true },
-  'st-lucie': { name: 'St. Lucie County', appraiser: 'https://www.paslc.org/', tax: 'https://www.tcslc.com/', searchAddr: q => 'https://www.paslc.org/', searchName: q => 'https://www.paslc.org/', directSearch: false },
-  'indian-river': { name: 'Indian River County', appraiser: 'https://www.ircpa.org/', tax: 'https://www.irctax.com/', searchAddr: q => `https://www.ircpa.org/search/?q=${encodeURIComponent(q)}`, searchName: q => `https://www.ircpa.org/search/?q=${encodeURIComponent(q)}`, directSearch: true },
-  'alachua': { name: 'Alachua County', appraiser: 'https://www.acpafl.org/', tax: 'https://www.alachuacounty.us/Depts/taxcollector/', searchAddr: q => `https://www.acpafl.org/property-search/?q=${encodeURIComponent(q)}`, searchName: q => `https://www.acpafl.org/property-search/?q=${encodeURIComponent(q)}`, directSearch: true },
-  'bay': { name: 'Bay County', appraiser: 'https://www.baypa.net/', tax: 'https://www.baytaxcollector.com/', searchAddr: q => 'https://www.baypa.net/', searchName: q => 'https://www.baypa.net/', directSearch: false },
-  'charlotte': { name: 'Charlotte County', appraiser: 'https://www.charlottecountyfl.gov/departments/property-appraiser', tax: 'https://charlottecountytax.com/', searchAddr: q => 'https://www.charlottecountyfl.gov/departments/property-appraiser', searchName: q => 'https://www.charlottecountyfl.gov/departments/property-appraiser', directSearch: false },
-  'citrus': { name: 'Citrus County', appraiser: 'https://www.citruspa.org/', tax: 'https://www.juddtaxcollector.com/', searchAddr: q => `https://www.citruspa.org/search/?q=${encodeURIComponent(q)}`, searchName: q => `https://www.citruspa.org/search/?q=${encodeURIComponent(q)}`, directSearch: true },
-  'clay': { name: 'Clay County', appraiser: 'https://www.ccpao.com/', tax: 'https://www.claytax.com/', searchAddr: q => `https://www.ccpao.com/search.asp?q=${encodeURIComponent(q)}`, searchName: q => `https://www.ccpao.com/search.asp?q=${encodeURIComponent(q)}`, directSearch: true },
-  'columbia': { name: 'Columbia County', appraiser: 'https://www.columbiafl.org/', tax: 'https://www.columbiataxes.com/', searchAddr: q => 'https://www.columbiafl.org/', searchName: q => 'https://www.columbiafl.org/', directSearch: false },
-  'escambia': { name: 'Escambia County', appraiser: 'https://www.escpa.org/', tax: 'https://myescambiatax.com/', searchAddr: q => `https://www.escpa.org/Search/?query=${encodeURIComponent(q)}`, searchName: q => `https://www.escpa.org/Search/?query=${encodeURIComponent(q)}`, directSearch: true },
-  'flagler': { name: 'Flagler County', appraiser: 'https://www.flaglerpa.com/', tax: 'https://www.flaglertax.com/', searchAddr: q => `https://www.flaglerpa.com/search/?addr=${encodeURIComponent(q)}`, searchName: q => `https://www.flaglerpa.com/search/?q=${encodeURIComponent(q)}`, directSearch: true },
-  'hernando': { name: 'Hernando County', appraiser: 'https://www.hernandopa.com/', tax: 'https://www.hernandotax.us/', searchAddr: q => `https://www.hernandopa.com/hpa/search/?q=${encodeURIComponent(q)}`, searchName: q => `https://www.hernandopa.com/hpa/search/?q=${encodeURIComponent(q)}`, directSearch: true },
-  'highlands': { name: 'Highlands County', appraiser: 'https://www.hcpafl.org/', tax: 'https://www.highlandstax.com/', searchAddr: q => 'https://www.hcpafl.org/', searchName: q => 'https://www.hcpafl.org/', directSearch: false },
-  'lake': { name: 'Lake County', appraiser: 'https://www.lakecopropappr.com/', tax: 'https://www.laketaxcollector.com/', searchAddr: q => `https://www.lakecopropappr.com/search.aspx?addr=${encodeURIComponent(q)}`, searchName: q => `https://www.lakecopropappr.com/search.aspx?name=${encodeURIComponent(q)}`, directSearch: true },
-  'marion': { name: 'Marion County', appraiser: 'https://www.pa.marion.fl.us/', tax: 'https://www.mariontax.com/', searchAddr: q => `https://www.pa.marion.fl.us/Search.aspx?q=${encodeURIComponent(q)}`, searchName: q => `https://www.pa.marion.fl.us/Search.aspx?q=${encodeURIComponent(q)}`, directSearch: true },
-  'nassau': { name: 'Nassau County', appraiser: 'https://www.nassauflpa.com/', tax: 'https://www.nassautaxes.com/', searchAddr: q => 'https://www.nassauflpa.com/', searchName: q => 'https://www.nassauflpa.com/', directSearch: false },
-  'okaloosa': { name: 'Okaloosa County', appraiser: 'https://www.okaloosafl.com/property-appraiser', tax: 'https://www.okaloosatax.com/', searchAddr: q => 'https://www.okaloosafl.com/property-appraiser', searchName: q => 'https://www.okaloosafl.com/property-appraiser', directSearch: false },
-  'osceola': { name: 'Osceola County', appraiser: 'https://www.property-appraiser.org/', tax: 'https://www.osceola.org/agencies-departments/departments/tax-collector/', searchAddr: q => 'https://www.property-appraiser.org/', searchName: q => 'https://www.property-appraiser.org/', directSearch: false },
-  'pasco': { name: 'Pasco County', appraiser: 'https://www.pascopa.com/', tax: 'https://www.pascotaxes.com/', searchAddr: q => `https://www.pascopa.com/Search/?q=${encodeURIComponent(q)}`, searchName: q => `https://www.pascopa.com/Search/?q=${encodeURIComponent(q)}`, directSearch: true },
-  'putnam': { name: 'Putnam County', appraiser: 'https://www.putnampa.com/', tax: 'https://www.putnamtaxcollector.com/', searchAddr: q => 'https://www.putnampa.com/', searchName: q => 'https://www.putnampa.com/', directSearch: false },
-  'santa-rosa': { name: 'Santa Rosa County', appraiser: 'https://www.srcpa.org/', tax: 'https://www.santarosatax.com/', searchAddr: q => `https://www.srcpa.org/search/?q=${encodeURIComponent(q)}`, searchName: q => `https://www.srcpa.org/search/?q=${encodeURIComponent(q)}`, directSearch: true },
-  'st-johns': { name: 'St. Johns County', appraiser: 'https://www.sjcpa.us/', tax: 'https://www.stjohnscountytaxcollector.com/', searchAddr: q => `https://www.sjcpa.us/Search/?q=${encodeURIComponent(q)}`, searchName: q => `https://www.sjcpa.us/Search/?q=${encodeURIComponent(q)}`, directSearch: true },
-  'sumter': { name: 'Sumter County', appraiser: 'https://www.sumterpa.com/', tax: 'https://www.sumtertaxcollector.com/', searchAddr: q => 'https://www.sumterpa.com/', searchName: q => 'https://www.sumterpa.com/', directSearch: false },
-  'walton': { name: 'Walton County', appraiser: 'https://www.waltonpa.com/', tax: 'https://www.waltontaxcollector.com/', searchAddr: q => 'https://www.waltonpa.com/', searchName: q => 'https://www.waltonpa.com/', directSearch: false }
+// county-taxes.net slug + fallback portal links
+const COUNTIES = {
+  miamidade:   { name:'Miami-Dade',    slug:'fl-miamidade',   tax:'https://www.miamidade.gov/taxcollector/', pa:'https://www.miamidade.gov/pa/', direct:true },
+  broward:     { name:'Broward',       slug:'broward/broward',      tax:'https://browardtaxes.com/',              pa:'https://bcpa.net/', direct:true },
+  palmbeach:   { name:'Palm Beach',    slug:'pbctax',    tax:'https://www.pbctax.com/',                pa:'https://www.pbcgov.com/papa/', direct:true },
+  hillsborough:{ name:'Hillsborough',  slug:'hillsborough', tax:'https://www.hillstax.org/',              pa:'https://www.hcpafl.org/', direct:true },
+  orange:      { name:'Orange',        slug:'fl-orange',       tax:'https://www.octaxcol.com/',              pa:'https://www.ocpafl.org/', direct:true },
+  pinellas:    { name:'Pinellas',      slug:'pinellas',     tax:'https://www.taxcollect.com/',            pa:'https://www.pcpao.gov/', direct:true },
+  collier:     { name:'Collier',       slug:'fl-collier',      tax:'https://www.colliertaxcollector.com/',   pa:'https://www.collierappraiser.com/', direct:true },
+  lee:         { name:'Lee',           slug:'fl-lee',          tax:'https://www.leetc.com/',                 pa:'https://www.leepa.org/', direct:true },
+  polk:        { name:'Polk',          slug:'fl-polk',         tax:'https://www.polktaxes.com/',             pa:'https://www.polkpa.org/', direct:true },
+  volusia:     { name:'Volusia',       slug:'fl-volusia',      tax:'https://www.volusia.org/services/financial-and-administrative-services/county-finance/tax-collector/', pa:'https://www.vcpa.org/', direct:true },
+  seminole:    { name:'Seminole',      slug:'fl-seminole',     tax:'https://www.seminolecountytax.com/',     pa:'https://www.scpafl.org/', direct:true },
+  sarasota:    { name:'Sarasota',      slug:'fl-sarasota',     tax:'https://www.sarasotataxcollector.com/', pa:'https://www.sc-pa.com/', direct:true },
+  manatee:     { name:'Manatee',       slug:'fl-manatee',      tax:'https://www.taxcollector.com/',          pa:'https://www.manateepao.com/', direct:true },
+  brevard:     { name:'Brevard',       slug:'fl-brevard',      tax:'https://www.brevardtaxcollector.com/',   pa:'https://www.bcpao.us/', direct:true },
+  duval:       { name:'Duval',         slug:'fl-duval',        tax:'https://www.coj.net/departments/tax-collector', pa:'https://www.coj.net/departments/property-appraiser', direct:true },
+  leon:        { name:'Leon',          slug:'fl-leon',         tax:'https://www.leontaxcollector.net/',      pa:'https://www.leonpa.org/', direct:true },
+  marion:      { name:'Marion',        slug:'fl-marion',       tax:'https://www.mariontax.com/',             pa:'https://www.pa.marion.fl.us/', direct:true },
+  stjohns:     { name:'St. Johns',     slug:'fl-stjohns',      tax:'https://www.stjohnscountytaxcollector.com/', pa:'https://www.sjcpa.us/', direct:true },
+  pasco:       { name:'Pasco',         slug:'fl-pasco',        tax:'https://www.pascotaxes.com/',            pa:'https://www.pascopa.com/', direct:true },
+  lake:        { name:'Lake',          slug:'fl-lake',         tax:'https://www.laketaxcollector.com/',      pa:'https://www.lakecopropappr.com/', direct:true },
+  osceola:     { name:'Osceola',       slug:'fl-osceola',      tax:'https://www.osceola.org/agencies-departments/departments/tax-collector/', pa:'https://www.property-appraiser.org/', direct:true },
+  charlotte:   { name:'Charlotte',     slug:'fl-charlotte',    tax:'https://charlottecountytax.com/',        pa:'https://www.charlottecountyfl.gov/departments/property-appraiser', direct:true },
+  alachua:     { name:'Alachua',       slug:'fl-alachua',      tax:'https://www.alachuacounty.us/Depts/taxcollector/', pa:'https://www.acpafl.org/', direct:true },
+  hernando:    { name:'Hernando',      slug:'fl-hernando',     tax:'https://www.hernandotax.us/',            pa:'https://www.hernandopa.com/', direct:true },
+  indianriver: { name:'Indian River',  slug:'fl-indianriver',  tax:'https://www.irctax.com/',                pa:'https://www.ircpa.org/', direct:true },
+  martin:      { name:'Martin',        slug:'fl-martin',       tax:'https://www.martintax.com/',             pa:'https://www.pa.martin.fl.us/', direct:true },
+  monroe:      { name:'Monroe',        slug:'fl-monroe',       tax:'https://www.monroetaxcollector.com/',    pa:'https://www.mcpafl.org/', direct:true },
+  clay:        { name:'Clay',          slug:'fl-clay',         tax:'https://www.claytax.com/',               pa:'https://www.ccpao.com/', direct:true },
+  stlucie:     { name:'St. Lucie',     slug:'fl-stlucie',      tax:'https://www.tcslc.com/',                 pa:'https://www.paslc.org/', direct:true },
+  escambia:    { name:'Escambia',      slug:'fl-escambia',     tax:'https://myescambiatax.com/',             pa:'https://www.escpa.org/', direct:true },
+  okaloosa:    { name:'Okaloosa',      slug:'fl-okaloosa',     tax:'https://www.okaloosatax.com/',           pa:'https://www.okaloosafl.com/property-appraiser', direct:true },
+  santarosa:   { name:'Santa Rosa',    slug:'fl-santarosa',    tax:'https://www.santarosatax.com/',          pa:'https://www.srcpa.org/', direct:true },
+  flagler:     { name:'Flagler',       slug:'fl-flagler',      tax:'https://www.flaglertax.com/',            pa:'https://www.flaglerpa.com/', direct:true },
+  citrus:      { name:'Citrus',        slug:'fl-citrus',       tax:'https://www.juddtaxcollector.com/',      pa:'https://www.citruspa.org/', direct:true },
+  sumter:      { name:'Sumter',        slug:'fl-sumter',       tax:'https://www.sumtertaxcollector.com/',    pa:'https://www.sumterpa.com/', direct:true },
+  // Portal only
+  baker:       { name:'Baker',      slug:null, tax:'https://www.bakercountyfl.org/tax-collector',           pa:'https://www.bakercountyfl.org/property-appraiser', direct:false },
+  bay:         { name:'Bay',        slug:null, tax:'https://www.baytaxcollector.com/',                      pa:'https://www.baypa.net/', direct:false },
+  bradford:    { name:'Bradford',   slug:null, tax:'https://www.bradfordcountytaxes.com/',                  pa:'https://www.bradfordappraiser.com/', direct:false },
+  calhoun:     { name:'Calhoun',    slug:null, tax:'https://www.calhouncountytax.com/',                     pa:'https://www.calhounsheriff.org/', direct:false },
+  columbia:    { name:'Columbia',   slug:null, tax:'https://www.columbiataxes.com/',                        pa:'https://www.columbiafl.org/', direct:false },
+  desoto:      { name:'DeSoto',     slug:null, tax:'https://www.desototaxcollector.com/',                   pa:'https://www.desotopafl.com/', direct:false },
+  dixie:       { name:'Dixie',      slug:null, tax:'https://www.dixiefl.gov/tax-collector',                 pa:'https://www.dixiefl.gov/property-appraiser', direct:false },
+  franklin:    { name:'Franklin',   slug:null, tax:'https://www.franklintaxcollector.com/',                 pa:'https://www.franklinpa.org/', direct:false },
+  gadsden:     { name:'Gadsden',    slug:null, tax:'https://www.gadsdentax.com/',                           pa:'https://www.gadsdenpa.org/', direct:false },
+  gilchrist:   { name:'Gilchrist',  slug:null, tax:'https://www.gilchristtax.com/',                         pa:'https://www.gilchristpa.org/', direct:false },
+  glades:      { name:'Glades',     slug:null, tax:'https://www.gladestax.com/',                            pa:'https://www.gladesfl.gov/property-appraiser', direct:false },
+  gulf:        { name:'Gulf',       slug:null, tax:'https://www.gulftaxcollector.com/',                     pa:'https://www.gulfpa.org/', direct:false },
+  hamilton:    { name:'Hamilton',   slug:null, tax:'https://www.hamiltontax.com/',                          pa:'https://www.hamiltoncountyfl.com/property-appraiser', direct:false },
+  hardee:      { name:'Hardee',     slug:null, tax:'https://www.hardeetax.com/',                            pa:'https://www.hardeepa.com/', direct:false },
+  hendry:      { name:'Hendry',     slug:null, tax:'https://www.hendrytax.com/',                            pa:'https://www.hendrypa.com/', direct:false },
+  highlands:   { name:'Highlands',  slug:null, tax:'https://www.highlandstax.com/',                        pa:'https://www.hcpafl.org/', direct:false },
+  holmes:      { name:'Holmes',     slug:null, tax:'https://www.holmestax.com/',                            pa:'https://www.holmescountyfl.gov/property-appraiser', direct:false },
+  jackson:     { name:'Jackson',    slug:null, tax:'https://www.jacksontaxcollector.com/',                  pa:'https://www.jacksonpa.org/', direct:false },
+  jefferson:   { name:'Jefferson',  slug:null, tax:'https://www.jeffersontax.com/',                         pa:'https://www.jeffersonpa.org/', direct:false },
+  lafayette:   { name:'Lafayette',  slug:null, tax:'https://www.lafayettetax.com/',                         pa:'https://www.lafayettefl.com/property-appraiser', direct:false },
+  levy:        { name:'Levy',       slug:null, tax:'https://www.levytaxcollector.com/',                     pa:'https://www.levypa.org/', direct:false },
+  liberty:     { name:'Liberty',    slug:null, tax:'https://www.libertytax.com/',                           pa:'https://www.libertyfl.com/property-appraiser', direct:false },
+  madison:     { name:'Madison',    slug:null, tax:'https://www.madisontax.com/',                           pa:'https://www.madisonpa.org/', direct:false },
+  nassau:      { name:'Nassau',     slug:null, tax:'https://www.nassautaxes.com/',                          pa:'https://www.nassauflpa.com/', direct:false },
+  okeechobee:  { name:'Okeechobee', slug:null, tax:'https://www.okeechobeecountytax.com/',                 pa:'https://www.okepa.org/', direct:false },
+  putnam:      { name:'Putnam',     slug:null, tax:'https://www.putnamtaxcollector.com/',                   pa:'https://www.putnampa.com/', direct:false },
+  suwannee:    { name:'Suwannee',   slug:null, tax:'https://www.suwanneetax.com/',                          pa:'https://www.suwanneepa.com/', direct:false },
+  taylor:      { name:'Taylor',     slug:null, tax:'https://www.taylorstax.com/',                           pa:'https://www.taylorcountytaxappraiser.com/', direct:false },
+  union:       { name:'Union',      slug:null, tax:'https://www.uniontax.com/',                             pa:'https://www.unioncountyfl.com/property-appraiser', direct:false },
+  wakulla:     { name:'Wakulla',    slug:null, tax:'https://www.wakullataxcollector.com/',                  pa:'https://www.wakullafl.gov/property-appraiser', direct:false },
+  walton:      { name:'Walton',     slug:null, tax:'https://www.waltontaxcollector.com/',                   pa:'https://www.waltonpa.com/', direct:false },
+  washington:  { name:'Washington', slug:null, tax:'https://www.washingtontaxcollector.com/',               pa:'https://www.washingtonpa.org/', direct:false }
 };
 
-// Geocode key mapping
-const GEO_TO_KEY = {
-  'miami-dade': 'miami-dade', 'broward': 'broward', 'palm beach': 'palm-beach',
-  'hillsborough': 'hillsborough', 'orange': 'orange', 'pinellas': 'pinellas',
-  'collier': 'collier', 'lee': 'lee', 'seminole': 'seminole', 'sarasota': 'sarasota',
-  'duval': 'duval', 'brevard': 'brevard', 'volusia': 'volusia', 'manatee': 'manatee',
-  'polk': 'polk', 'leon': 'leon', 'monroe': 'monroe', 'martin': 'martin',
-  'st. lucie': 'st-lucie', 'st lucie': 'st-lucie', 'indian river': 'indian-river',
-  'alachua': 'alachua', 'bay': 'bay', 'charlotte': 'charlotte', 'citrus': 'citrus',
-  'clay': 'clay', 'columbia': 'columbia', 'escambia': 'escambia', 'flagler': 'flagler',
-  'hernando': 'hernando', 'highlands': 'highlands', 'lake': 'lake', 'marion': 'marion',
-  'nassau': 'nassau', 'okaloosa': 'okaloosa', 'osceola': 'osceola', 'pasco': 'pasco',
-  'putnam': 'putnam', 'santa rosa': 'santa-rosa', 'st. johns': 'st-johns', 'st johns': 'st-johns',
-  'sumter': 'sumter', 'walton': 'walton'
+// Geo slug mapping for Nominatim county name -> COUNTIES key
+const GEO_MAP = {
+  'miami-dade':'miamidade','broward':'broward','palm beach':'palmbeach',
+  'hillsborough':'hillsborough','orange':'orange','pinellas':'pinellas',
+  'collier':'collier','lee':'lee','polk':'polk','volusia':'volusia',
+  'seminole':'seminole','sarasota':'sarasota','manatee':'manatee',
+  'brevard':'brevard','duval':'duval','leon':'leon','marion':'marion',
+  'st. johns':'stjohns','st johns':'stjohns','pasco':'pasco','lake':'lake',
+  'osceola':'osceola','charlotte':'charlotte','alachua':'alachua',
+  'hernando':'hernando','indian river':'indianriver','martin':'martin',
+  'monroe':'monroe','clay':'clay','st. lucie':'stlucie','st lucie':'stlucie',
+  'escambia':'escambia','okaloosa':'okaloosa','santa rosa':'santarosa',
+  'flagler':'flagler','citrus':'citrus','sumter':'sumter',
+  'baker':'baker','bay':'bay','bradford':'bradford','columbia':'columbia',
+  'desoto':'desoto','highlands':'highlands','nassau':'nassau',
+  'okeechobee':'okeechobee','putnam':'putnam','walton':'walton',
+  'washington':'washington','suwannee':'suwannee'
 };
 
-const NOISE = /^(furnitures?|furniture|appliances?|building|land|parking|storage|garage|boat\s*slip|cabana|office|commercial|residential|unit\s*only|common\s*area|n\/a)$/i;
+const NOISE = /^(furnitures?|furniture|appliances?|building|land|parking|storage|garage|boat\s*slip|cabana|n\/a)$/i;
 
-function extractStreetNumber(addr) {
-  const m = addr.match(/^(\d+)/);
-  return m ? m[1] : '';
-}
-function extractStreetName(addr) {
-  // Remove number prefix, unit/apt suffixes, clean up
-  return addr.replace(/^\d+\s*/, '').replace(/\s*(#|unit|apt|suite|ste|apt\.)\s*\S+/gi, '').trim();
-}
-
-function cleanAddress(raw) {
+function cleanAddr(raw) {
   const lines = raw.split(/[\n;]+/).map(l => l.trim()).filter(Boolean);
-  const addrLine = lines.find(l => /^\d/.test(l) || /^(N|S|E|W|NW|NE|SW|SE)\b/i.test(l)) || lines[0];
-  let cleaned = addrLine.split(/,\s*/).filter(p => !NOISE.test(p.trim())).join(', ');
-  return cleaned.trim();
+  const line = lines.find(l => /^\d/i.test(l) || /^(NW|NE|SW|SE|N|S|E|W)\b/i.test(l)) || lines[0];
+  return line.split(/,\s*/).filter(p => !NOISE.test(p.trim())).join(', ').trim();
 }
 
-function setMode(mode) {
-  searchMode = mode;
-  document.getElementById('btn-address').classList.toggle('active', mode === 'address');
-  document.getElementById('btn-name').classList.toggle('active', mode === 'name');
-  document.getElementById('tip-address').style.display = mode === 'address' ? '' : 'none';
-  document.getElementById('tip-name').style.display = mode === 'name' ? '' : 'none';
-  document.getElementById('name-format-help').style.display = mode === 'name' ? '' : 'none';
-  document.querySelectorAll('.entry-input').forEach(i => {
-    i.placeholder = mode === 'address' ? 'Ej: 8270 SW 149 Court Unit 10205' : 'Ej: Garcia, Pedro  o  Smith LLC';
-  });
+function setMode(m) {
+  mode = m;
+  document.getElementById('btn-addr').classList.toggle('active', m==='address');
+  document.getElementById('btn-name').classList.toggle('active', m==='name');
+  document.getElementById('tip-addr').style.display = m==='address' ? '' : 'none';
+  document.getElementById('tip-name').style.display = m==='name' ? '' : 'none';
+  const ph = m==='address' ? 'Ej: 8270 SW 149 Court Unit 10205' : 'Ej: Korn Investments LLC  o  Garcia, Pedro';
+  document.querySelectorAll('.entry-input').forEach(i => i.placeholder = ph);
 }
 
-let entryId = 0;
-function addEntry(val = '') {
-  const id = entryId++;
+let eid = 0;
+function addEntry(v='') {
+  const id = eid++;
   const list = document.getElementById('entry-list');
-  const div = document.createElement('div');
-  div.className = 'entry-row';
-  div.id = 'er-' + id;
-  const ph = searchMode === 'address' ? 'Ej: 8270 SW 149 Court Unit 10205' : 'Ej: Garcia, Pedro  o  Smith LLC';
-  div.innerHTML = `<input class="entry-input" id="ei-${id}" type="text" placeholder="${ph}" value="${val}" onkeydown="if(event.key==='Enter')runSearch()"><button class="remove-btn" onclick="document.getElementById('er-${id}').remove()">×</button>`;
-  list.appendChild(div);
-  document.getElementById('ei-' + id).focus();
+  const d = document.createElement('div');
+  d.className = 'entry-row'; d.id = 'er'+id;
+  const ph = mode==='address' ? 'Ej: 8270 SW 149 Court Unit 10205' : 'Ej: Korn Investments LLC';
+  d.innerHTML = `<input class="entry-input" id="ei${id}" type="text" placeholder="${ph}" value="${v}" onkeydown="if(event.key==='Enter')runSearch()"><button class="remove-btn" onclick="document.getElementById('er${id}').remove()">×</button>`;
+  list.appendChild(d);
+  document.getElementById('ei'+id).focus();
 }
 
 function clearAll() {
-  document.getElementById('entry-list').innerHTML = '';
-  document.getElementById('results').innerHTML = '';
-  document.getElementById('note').style.display = 'none';
-  entryId = 0;
-  addEntry();
+  document.getElementById('entry-list').innerHTML='';
+  document.getElementById('results').innerHTML='';
+  document.getElementById('note').style.display='none';
+  eid=0; addEntry();
 }
 
-async function geocode(addr) {
+async function geocode(q) {
   try {
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(addr + ' Florida USA')}&countrycodes=us&addressdetails=1&limit=1`;
-    const r = await fetch(url, { headers: { 'Accept-Language': 'en' } });
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q+' Florida USA')}&countrycodes=us&addressdetails=1&limit=1`;
+    const r = await fetch(url, {headers:{'Accept-Language':'en'}});
     const d = await r.json();
-    if (!d || !d.length) return null;
+    if (!d||!d.length) return null;
     const a = d[0].address;
-    if ((a.state || '').toLowerCase() !== 'florida') return null;
-    const rawCounty = (a.county || '').replace(/ County$/i, '').toLowerCase().trim();
-    return GEO_TO_KEY[rawCounty] || null;
+    if ((a.state||'').toLowerCase()!=='florida') return null;
+    const c = (a.county||'').replace(/ County$/i,'').toLowerCase().trim();
+    return GEO_MAP[c] || null;
   } catch { return null; }
 }
 
-async function runSearch() {
-  const results = document.getElementById('results');
-  const note = document.getElementById('note');
-  results.innerHTML = '';
-  note.style.display = 'none';
+function buildUrl(county, query) {
+  if (!county.slug) return null;
+  if (county.slug === 'pbctax') {
+    return `https://pbctax.publicaccessnow.com/PropertyTax.aspx?s=${encodeURIComponent(query)}&pg=1&g=-1&moduleId=449`;
+  }
+  return `https://county-taxes.net/${county.slug}/property-tax?search_query=${encodeURIComponent(query)}`;
+}
 
-  const inputs = document.querySelectorAll('.entry-input');
-  const queries = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
+async function runSearch() {
+  const res = document.getElementById('results');
+  const note = document.getElementById('note');
+  res.innerHTML=''; note.style.display='none';
+
+  const queries = Array.from(document.querySelectorAll('.entry-input')).map(i=>i.value.trim()).filter(Boolean);
   if (!queries.length) return;
 
-  const selectedCounty = document.getElementById('county-select').value;
+  const selKey = document.getElementById('county-sel').value;
 
   for (const rawQ of queries) {
     const card = document.createElement('div');
     card.className = 'result-card';
     card.innerHTML = `<div class="rc-query">${rawQ}</div><div class="rc-county"><span class="spinner"></span> Procesando...</div>`;
-    results.appendChild(card);
+    res.appendChild(card);
 
-    let countyKey = null;
-    let detectionMethod = '';
-    let usedFallback = false;
+    let key = selKey || null;
+    let autoDetected = false;
 
-    if (searchMode === 'address') {
-      const q = cleanAddress(rawQ);
-
-      if (selectedCounty !== 'auto') {
-        // Manual selection — use directly, no geocode needed
-        countyKey = selectedCounty;
-        detectionMethod = 'Condado seleccionado manualmente';
-      } else {
-        // Try geocode
-        card.querySelector('.rc-county').innerHTML = '<span class="spinner"></span> Detectando condado...';
-        countyKey = await geocode(q);
-        if (countyKey) {
-          detectionMethod = 'Condado detectado automáticamente';
-        } else {
-          card.className = 'result-card error';
-          card.innerHTML = `<div class="rc-query">${rawQ}</div><div class="err-msg">No se pudo detectar el condado automáticamente. Selecciona el condado manualmente en el selector de arriba.</div>`;
-          continue;
-        }
-      }
-
-      const data = COUNTY_DATA[countyKey];
-      if (!data) {
-        card.className = 'result-card error';
-        card.innerHTML = `<div class="rc-query">${rawQ}</div><div class="err-msg">Condado no encontrado en la base de datos.</div>`;
-        continue;
-      }
-
-      const q2 = cleanAddress(rawQ);
-      const searchUrl = data.searchAddr(q2);
-
-      card.className = 'result-card';
-      card.innerHTML = `
-        <div class="rc-top">
-          <div>
-            <div class="rc-query">${rawQ}</div>
-            <div class="rc-county">${data.name}</div>
-            <div class="rc-method">${detectionMethod}</div>
-          </div>
-          <span class="badge ${data.directSearch ? 'badge-green' : 'badge-blue'}">${data.directSearch ? 'Búsqueda directa' : 'Portal principal'}</span>
-        </div>
-        <div class="rc-links">
-          <a class="rc-link ${data.directSearch ? 'green' : 'primary'}" href="${searchUrl}" target="_blank">${data.directSearch ? 'Buscar dirección →' : 'Ir al portal →'}</a>
-          <a class="rc-link" href="${data.appraiser}" target="_blank">Property Appraiser →</a>
-          <a class="rc-link" href="${data.tax}" target="_blank">Tax Collector →</a>
-        </div>`;
-
-    } else {
-      // Name search
-      if (selectedCounty === 'auto') {
-        card.className = 'result-card error';
-        card.innerHTML = `<div class="rc-query">${rawQ}</div><div class="err-msg">Para búsqueda por nombre debes seleccionar el condado manualmente.</div>`;
-        continue;
-      }
-      countyKey = selectedCounty;
-      const data = COUNTY_DATA[countyKey];
-      const searchUrl = data.searchName(rawQ);
-
-      card.className = 'result-card';
-      card.innerHTML = `
-        <div class="rc-top">
-          <div>
-            <div class="rc-query">${rawQ}</div>
-            <div class="rc-county">${data.name}</div>
-            <div class="rc-method">Búsqueda por nombre</div>
-          </div>
-          <span class="badge ${data.directSearch ? 'badge-green' : 'badge-blue'}">${data.directSearch ? 'Búsqueda directa' : 'Portal principal'}</span>
-        </div>
-        <div class="rc-links">
-          <a class="rc-link ${data.directSearch ? 'green' : 'primary'}" href="${searchUrl}" target="_blank">${data.directSearch ? 'Buscar nombre →' : 'Ir al portal →'}</a>
-          <a class="rc-link" href="${data.appraiser}" target="_blank">Property Appraiser →</a>
-          <a class="rc-link" href="${data.tax}" target="_blank">Tax Collector →</a>
-        </div>`;
+    if (!key && mode==='address') {
+      const cleaned = cleanAddr(rawQ);
+      key = await geocode(cleaned);
+      if (key) autoDetected = true;
     }
+
+    if (!key) {
+      card.className='result-card error';
+      if (mode==='name') {
+        card.innerHTML=`<div class="rc-query">${rawQ}</div><div class="err-msg">Para buscar por nombre debes seleccionar el condado arriba.</div>`;
+      } else {
+        card.innerHTML=`<div class="rc-query">${rawQ}</div><div class="err-msg">No se pudo detectar el condado automáticamente. Selecciónalo en el menú de arriba.</div>`;
+      }
+      continue;
+    }
+
+    const co = COUNTIES[key];
+    const searchQuery = mode==='address' ? cleanAddr(rawQ) : rawQ;
+    const directUrl = buildUrl(co, searchQuery);
+
+    card.className='result-card';
+    card.innerHTML=`
+      <div class="rc-top">
+        <div>
+          <div class="rc-query">${rawQ}</div>
+          <div class="rc-county">${co.name} County</div>
+          <div class="rc-sub">${autoDetected ? 'Detectado automáticamente' : 'Seleccionado manualmente'} · ${mode==='address'?'búsqueda por dirección':'búsqueda por nombre'}</div>
+        </div>
+        <span class="badge ${co.direct?'badge-green':'badge-blue'}">${co.direct?'Búsqueda directa':'Portal'}</span>
+      </div>
+      <div class="rc-links">
+        ${directUrl ? `<a class="rc-link primary" href="${directUrl}" target="_blank">Ver resultados →</a>` : ''}
+        <a class="rc-link sec" href="${co.tax}" target="_blank">Tax Collector →</a>
+        <a class="rc-link" href="${co.pa}" target="_blank">Property Appraiser →</a>
+      </div>`;
   }
-  note.style.display = 'block';
+  note.style.display='block';
 }
 
 addEntry();
